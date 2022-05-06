@@ -1,0 +1,125 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+.container {
+    margin: 20px;
+    padding: 15px;
+    font-size: 1.8rem;
+}
+
+.container h2 {
+    font-size: 2.5rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 500px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    align-content: flex-end;
+}
+
+.form-group label {
+    width: 30%;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+}
+
+.form-group span {
+    display: none;
+    color: red;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.btn-1 {
+    /* width: 50%; */
+    margin-bottom: 15px;
+}
+
+.btn-1 .btn-them {
+    margin-right: 5px;
+}
+.btn-1 .btn-luu {
+    margin-right: 0;
+}
+
+.btn-1 .btn-them, .btn-1 .btn-luu {
+    cursor: pointer;
+}
+
+.btn {
+    width: 500px;
+   display: flex;
+   justify-content: flex-end;
+  align-items: center;  
+}
+
+.btn button {
+    padding: 10px;
+    margin-right: 5px;
+}
+
+.btn .save-btn, .btn .get-btn, .btn .delete-btn {
+    background-color: #6a7cfe;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.btn .delete-btn {
+    margin-right: 0;
+}
+
+.btn .get-btn {
+    background-color:#fa63ff;
+}
+
+.btn .delete-btn {
+    background-color: #ff3d5b;
+}
+
+/* search box */
+.search-box {
+    width: 700px;
+}
+
+.search-box .input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.input-group input {
+    width: 70%;
+    padding: 5px;
+}
+
+.input-group-btn .search-btn {
+   padding: 5px;
+   cursor: pointer;
+}
+
+/* table */
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+#TableSinhVien {
+    width: 100%;
+}

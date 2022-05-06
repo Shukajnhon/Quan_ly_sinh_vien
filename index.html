@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Sinh viên với JavaScript</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Thông tin sinh viên</h2>
+        <form action="">
+            <div class="form-group">
+                <label for="masv">Mã sinh viên:</label>
+                <input type="text" class="form-control" id="masv" name="MaSV" placeholder="Nhập mã sinh viên">
+                <span id="studentCodeError">Vui lòng nhập mã sinh viên</span>
+            </div>
+
+            <div class="form-group">
+                <label for="hoten">Họ tên:</label>
+                <input type="text" class="form-control" id="hoten" name="hoten" placeholder="Nhập họ tên">
+                <span id="fullNameError">Vui lòng nhập họ tên</span>
+            </div>
+
+            <div class="form-group">
+                <label for="cmnd">CMND:</label>
+                <input type="text" class="form-control" id="cmnd" name="cmnd" placeholder="Nhập CMND">
+                <span id="cmndError">Vui lòng nhập số CMND</span>
+            </div>
+
+            <div class="form-group">
+                <label for="sodt">Số điện thoại:</label>
+                <input type="text" class="form-control" id="sodt" name="sdt" placeholder="Nhập số điện thoại">
+                <span id="sodtError">Vui lòng nhập đúng đinh dạng số điện thoại</span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email">
+                <span id="emailError">Vui lòng nhập đúng định dạng email</span>
+            </div>
+
+            <div class="form-group">
+                <label for="toan">Toán:</label>
+                <input type="number" class="form-control" id="toan" name="toan" placeholder="Nhập điểm Toán">
+            </div>
+
+            <div class="form-group">
+                <label for="hoa">Hóa:</label>
+                <input type="number" class="form-control" id="hoa" name="hoa" placeholder="Nhập điểm Hóa">
+            </div>
+
+            <div class="form-group">
+                <label for="ly">Lý:</label>
+                <input type="number" class="form-control" id="ly" name="ly" placeholder="Nhập điểm Lý">
+            </div>
+        </form>
+        <div class="btn btn-1">
+            <button type="button" class="btn-them" onclick="themSinhVien()">Thêm sinh viên</button>
+            <button type="button" class="btn-luu" onclick="LuuThongTin()"> Lưu</button>
+        </div>
+        <div class="btn btn-2">
+            <button class="save-btn" onclick="setStorage()">Lưu Storage</button>
+            <button class="get-btn" onclick="getStorage()">Lấy Storage</button>
+            <button class="delete-btn">xóa Sinh Viên</button>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- tìm kiếm sv và hiển thị danh sách sinh viên-->
+    <div class="container">
+        <div class="search-box">
+            <div class="input-group">
+                <input type="text" id="tukhoa" class="form-control" placeholder="Nhập vào họ tên ...">
+                <span class="input-group-btn">
+                    <button class="search-btn" type="button">Tìm kiếm</button>
+                </span>
+            </div>
+            <br />
+            <div class="alert alert-success" id="ThongBao"></div>
+        </div>
+
+
+        <h2>Danh sách sinh viên</h2>
+        <p> </p>
+        <table id="TableSinhVien" class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Mã SV</th>
+                    <th>Họ Tên</th>
+                    <th>CMND</th>
+                    <th>Điện thoại</th>
+                    <th>Email</th>
+                    <th>Điểm TB</th>
+                    <th>Xếp loại</th>
+                </tr>
+            </thead>
+            <tbody id="tbodySinhVien">
+                <tr>
+                    <!-- <td></td>
+                    <td>giatri cot 1</td>
+                    <td>giatri cot 2</td>
+                    <td>giatri cot 3</td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+    <script src="./assets/js/sinhVien.js"></script>
+    <script src="./assets/js/danhSachSinhVien.js"></script>
+    <script src="./assets/js/Validation_form.js"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>
