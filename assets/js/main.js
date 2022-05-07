@@ -1,19 +1,42 @@
 var DanhSachSinhVien = new danhSachSinhVien();
 var validation = new ValidationForm();
 
+// gọi localStorage mỗi khi load
+getStorage()
 
 function DomID(id) {
     var element = document.getElementById(id);
     return element
 }
+// lấy dũ liệu từ input form
+function getValueFromInput(selector) {
+    var inputElement = document.getElementById(selector)
+    return inputElement.value
+}
+// set value to input by selector
+function setInputValue(selector, value) {
+    var element = document.getElementById(selector)
+    return element.value = value
+}
+
 function themSinhVien() {
 
     // lấy dữ liệu người dùng nhập vào
-    var masv = DomID("masv").value;
-    var hoten = DomID("hoten").value;
-    var cmnd = DomID("cmnd").value;
-    var sodt = DomID("sodt").value;
-    var email = DomID("email").value;
+
+
+    // cách 1:
+    // var masv = DomID("masv").value;
+    // var hoten = DomID("hoten").value;
+    // var cmnd = DomID("cmnd").value;
+    // var sodt = DomID("sodt").value;
+    // var email = DomID("email").value;
+
+    // cách 2:
+    var masv = getValueFromInput("masv")
+    var hoten = getValueFromInput("hoten")
+    var cmnd = getValueFromInput("cmnd")
+    var sodt = getValueFromInput("sodt")
+    var email = getValueFromInput("email")
 
     var loi = 0;
 
@@ -63,9 +86,17 @@ function themSinhVien() {
         loi++;
     }
 
+    // nếu các diều kiện trên lỗi, dừng chương trình, ko push vào DSSV
     if (loi != 0) {
         return;
     }
+
+    // check user nhập MaSv trùng. nếu trùng dừng  chương trình, ko push vào DSSV
+    if (checkMaSV(masv)) {
+        return;
+    }
+
+
 
     // push Sinh vien vao Danh SAch SV
     var sinhvien = new sinhVien(masv, hoten, cmnd, sodt, email);
@@ -80,9 +111,36 @@ function themSinhVien() {
     capNhatDanhSachSinhVien(DanhSachSinhVien)
 
 
+    // clear value from Input form after click add Sinh Vien Button
+    setInputValue("masv", "")
+    setInputValue("hoten", "")
+    setInputValue("cmnd", "")
+    setInputValue("sodt", "")
+    setInputValue("email", "")
+
+
+
     console.log(DanhSachSinhVien);
 }
 
+
+// check MaSV (hoặc mã ID)
+function checkMaSV(masv) {
+    if (localStorage.getItem('DanhSachSV')) {
+
+        let MaSv_list = DanhSachSinhVien.DSSV;
+
+        for (var i = 0; i < MaSv_list.length; i++) {
+
+            if (MaSv_list[i].MaSv === masv) {
+                alert('Mã sinh viên đã tồn tại')
+                return true;
+            }
+            capNhatDanhSachSinhVien(DanhSachSinhVien)
+        }
+    }
+
+}
 
 
 // cập nhật danh sách sinh vien 
@@ -99,6 +157,15 @@ function capNhatDanhSachSinhVien(DanhSachSinhVien) {
 
         // tạo thẻ td và các filter dữ liệu sinh viên 
         var tdCheckBox = document.createElement('td')
+        // tạo checkbox để click chọn 1 hoặc nhiều đối tường cần xóa sau này
+        var checkBoxMaSV = document.createElement('input')
+        // console.log(checkBoxMaSV);
+        checkBoxMaSV.setAttribute('class', 'checkBoxMaSV')
+        checkBoxMaSV.setAttribute('type', 'checkbox')
+        checkBoxMaSV.setAttribute('value', sv.MaSv);
+        // Thêm checkBoxMaSV attribute vào TdCheckBox
+        tdCheckBox.appendChild(checkBoxMaSV)
+
         var tdMaSV = taoTheTD('masv', sv.MaSv);
         var tdHoTen = taoTheTD('hoten', sv.HoTen);
         var tdCMND = taoTheTD('cmnd', sv.Cmnd);
@@ -116,6 +183,30 @@ function capNhatDanhSachSinhVien(DanhSachSinhVien) {
         // append các tr vào tbodySinhVien
         listTableSV.appendChild(trSinhVien);
     }
+}
+
+// xóa sinh viên
+function deleteSinhVien() {
+    //mảng checkbox
+    var lstMaSV = document.querySelectorAll('.checkBoxMaSV')
+
+    // mảng sinh viên đc chọn
+    var lstMaSVDuocChon = [];
+
+
+    if (confirm('bạn có chắc muốn xóa?')) {
+        for (var i = 0; i < lstMaSV.length; i++) {
+            // kiểm tra phần checkbox đc chọn hay chưa
+            if (lstMaSV[i].checked) {
+                // phần tử đc chọn thì push vào lstMaSVDuocChon
+                lstMaSVDuocChon.push(lstMaSV[i].value);
+                console.log(lstMaSVDuocChon);
+            }
+        }
+
+        DanhSachSinhVien.xoaSinhVien(lstMaSVDuocChon)
+    }
+    capNhatDanhSachSinhVien(DanhSachSinhVien)
 }
 
 // Tạo thẻ Table data 
@@ -173,4 +264,3 @@ function getStorage() {
 
     capNhatDanhSachSinhVien(DanhSachSinhVien)
 }
-
