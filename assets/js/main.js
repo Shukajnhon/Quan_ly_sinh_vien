@@ -185,6 +185,14 @@ function capNhatDanhSachSinhVien(DanhSachSinhVien) {
     }
 }
 
+// tìm kiếm sinh viên 
+function search() {
+    var TuKhoa = getValueFromInput('tukhoa');
+    var lstDSSVTimKiem = DanhSachSinhVien.timKiemSinhVien(TuKhoa)
+    capNhatDanhSachSinhVien(lstDSSVTimKiem)
+}
+search()
+
 // xóa sinh viên
 function deleteSinhVien() {
     //mảng checkbox

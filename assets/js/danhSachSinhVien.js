@@ -27,5 +27,16 @@ function danhSachSinhVien() {
     // tim kiem sv
     this.timKiemSinhVien = function (keywork) {
 
+        // list kết quả tìm kiếm: DanhSachSinhVien
+        var lstKetQuaTimKiem = new danhSachSinhVien();
+        for (var i = 0; i < this.DSSV.length; i++) {
+            let sinhvien = this.DSSV[i];
+
+            // tìm kiếm sv khi user nhập ký tự hoa và thường đều trả về tất cả giá trị có trong DSSV
+            if (sinhvien.HoTen.search(keywork) != -1 || sinhvien.HoTen.toLowerCase().search(keywork) != -1 || sinhvien.HoTen.toUpperCase().search(keywork) != -1) {
+                lstKetQuaTimKiem.themSinhVien(sinhvien)
+            }
+        }
+        return lstKetQuaTimKiem
     };
 }
