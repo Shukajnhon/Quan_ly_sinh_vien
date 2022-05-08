@@ -1,6 +1,30 @@
 var DanhSachSinhVien = new danhSachSinhVien();
 var validation = new ValidationForm();
 
+// bổ sung thuộc tính
+sinhVien.prototype.DiemToan = '';
+sinhVien.prototype.DiemHoa = '';
+sinhVien.prototype.DiemLy = '';
+sinhVien.prototype.DiemTB = '';
+sinhVien.prototype.xepLoaiHocLuc = '';
+
+// bổ sung phương thức
+sinhVien.prototype.tinhDTB = function () {
+    this.DiemTB = ((Number(this.DiemToan) + Number(this.DiemHoa) + Number(this.DiemLy)) / 3).toFixed(2);
+}
+
+sinhVien.prototype.xepLoai = function () {
+    if (this.DiemTB <= 10 && this.DiemTB >= 8) {
+        this.xepLoaiHocLuc = 'Giỏi'
+    } else if (this.DiemTB < 8 && this.DiemTB >= 6.5) {
+        this.xepLoaiHocLuc = 'Khá'
+    } else if (this.DiemTB < 6.5 && this.DiemTB >= 5) {
+        this.xepLoaiHocLuc = 'Trung Bình'
+    } else if (this.DiemTB < 5) {
+        this.xepLoaiHocLuc = 'Yếu'
+    }
+}
+
 // gọi localStorage mỗi khi load
 getStorage()
 
@@ -101,6 +125,12 @@ function themSinhVien() {
     // push Sinh vien vao Danh SAch SV
     var sinhvien = new sinhVien(masv, hoten, cmnd, sodt, email);
 
+    sinhvien.DiemToan = DomID("toan").value;
+    sinhvien.DiemLy = DomID("ly").value;
+    sinhvien.DiemHoa = DomID("hoa").value;
+    sinhvien.tinhDTB();
+    sinhvien.xepLoai();
+
     // Kiểm tra nếu 1 trong những validation bằng Rỗng ko push vào mảng DSSV
     if (!(masv, hoten, cmnd, sodt, email === '')) {
         DanhSachSinhVien.themSinhVien(sinhvien);
@@ -109,6 +139,7 @@ function themSinhVien() {
 
     // Cập nhật và render danh sách sinh viên
     capNhatDanhSachSinhVien(DanhSachSinhVien)
+    console.log(sinhvien);
 
 
     // clear value from Input form after click add Sinh Vien Button
@@ -172,6 +203,10 @@ function capNhatDanhSachSinhVien(DanhSachSinhVien) {
         var tdSoDT = taoTheTD('sodt', sv.Sodt);
         var tdEmail = taoTheTD('email', sv.Email);
 
+        // tạo thẻ td Điểm trung bình và xếp loại
+        var tdDTB = taoTheTD('DTB', sv.DiemTB)
+        var tdXepLoai = taoTheTD('XepLoai', sv.xepLoaiHocLuc)
+
         // append các td vào tr
         trSinhVien.appendChild(tdCheckBox);
         trSinhVien.appendChild(tdMaSV);
@@ -179,6 +214,8 @@ function capNhatDanhSachSinhVien(DanhSachSinhVien) {
         trSinhVien.appendChild(tdCMND);
         trSinhVien.appendChild(tdSoDT);
         trSinhVien.appendChild(tdEmail);
+        trSinhVien.appendChild(tdDTB);
+        trSinhVien.appendChild(tdXepLoai);
 
         // append các tr vào tbodySinhVien
         listTableSV.appendChild(trSinhVien);
@@ -261,6 +298,12 @@ function luuThongTin() {
     }
     // push Sinh vien vao Danh SAch SV
     var sinhvien = new sinhVien(masv, hoten, cmnd, sodt, email);
+
+    sinhvien.DiemToan = DomID("toan").value;
+    sinhvien.DiemLy = DomID("ly").value;
+    sinhvien.DiemHoa = DomID("hoa").value;
+    sinhvien.tinhDTB();
+    sinhvien.xepLoai();
 
     // Kiểm tra nếu 1 trong những validation bằng Rỗng ko push vào mảng DSSV
     if (!(masv, hoten, cmnd, sodt, email === '')) {
