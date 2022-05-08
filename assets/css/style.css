@@ -123,3 +123,10 @@ table, th, td {
 #TableSinhVien {
     width: 100%;
 }
+
+#tbodySinhVien .masv {
+    cursor: pointer;
+
+}#tbodySinhVien tr:hover {
+    background-color: #6af9fe;
+}

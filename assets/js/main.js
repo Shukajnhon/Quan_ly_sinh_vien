@@ -32,13 +32,13 @@ function themSinhVien() {
     // var email = DomID("email").value;
 
     // cách 2:
-    var masv = getValueFromInput("masv")
-    var hoten = getValueFromInput("hoten")
-    var cmnd = getValueFromInput("cmnd")
-    var sodt = getValueFromInput("sodt")
-    var email = getValueFromInput("email")
+    let masv = getValueFromInput("masv")
+    let hoten = getValueFromInput("hoten")
+    let cmnd = getValueFromInput("cmnd")
+    let sodt = getValueFromInput("sodt")
+    let email = getValueFromInput("email")
 
-    var loi = 0;
+    let loi = 0;
 
     //kiem tra validate ma sinh vien
     if (kiemTraDauVaoRong("masv", masv) === true) {
@@ -119,8 +119,6 @@ function themSinhVien() {
     setInputValue("email", "")
 
 
-
-    console.log(DanhSachSinhVien);
 }
 
 
@@ -154,6 +152,8 @@ function capNhatDanhSachSinhVien(DanhSachSinhVien) {
 
         // tạo thẻ tr
         var trSinhVien = document.createElement('tr');
+        trSinhVien.setAttribute('id', sv.MaSv)
+        trSinhVien.setAttribute('onclick', 'editSinhVien("' + sv.MaSv + '")')
 
         // tạo thẻ td và các filter dữ liệu sinh viên 
         var tdCheckBox = document.createElement('td')
@@ -183,6 +183,93 @@ function capNhatDanhSachSinhVien(DanhSachSinhVien) {
         // append các tr vào tbodySinhVien
         listTableSV.appendChild(trSinhVien);
     }
+}
+
+// edit (chỉnh sửa) sinh viên
+function editSinhVien(masv) {
+
+    let sinhvien = DanhSachSinhVien.timSVTheoMa(masv)
+
+    if (sinhvien != null) {
+        DomID('masv').value = sinhvien.MaSv
+        DomID('hoten').value = sinhvien.HoTen
+        DomID('cmnd').value = sinhvien.Cmnd
+        DomID('sodt').value = sinhvien.Sodt
+        DomID('email').value = sinhvien.Email
+    }
+
+}
+
+function luuThongTin() {
+    let masv = getValueFromInput("masv")
+    let hoten = getValueFromInput("hoten")
+    let cmnd = getValueFromInput("cmnd")
+    let sodt = getValueFromInput("sodt")
+    let email = getValueFromInput("email")
+
+
+    let loi = 0;
+
+    if (kiemTraDauVaoRong("masv", masv) === true) {
+        changeDisplayStyleBlock("studentCodeError");
+        loi++;
+    } else {
+        changeDisplayStyleNone("studentCodeError")
+    }
+
+    //kiem tra validate ho ten sinh vien
+    if (kiemTraDauVaoRong("hoten", hoten) === true) {
+        changeDisplayStyleBlock("fullNameError");
+        loi++;
+    } else {
+        changeDisplayStyleNone("fullNameError")
+    }
+
+    //kiem tra validate CMND sinh vien
+    if (kiemTraDauVaoRong("cmnd", cmnd) === true) {
+        changeDisplayStyleBlock("cmndError");
+        loi++;
+    } else {
+        changeDisplayStyleNone("cmndError")
+    }
+
+    //kiem tra validate so dien thoai sinh vien
+
+    if (validation.KiemTraSoDT(sodt)) {
+        changeDisplayStyleNone("sodtError")
+        DomID("sodt").style.borderColor = '';
+    } else {
+        DomID("sodt").style.borderColor = 'red';
+        changeDisplayStyleBlock("sodtError");
+        loi++;
+    }
+
+
+    //kiem tra validate email sinh vien
+    if (validation.KiemTraEmail(email)) {
+        changeDisplayStyleNone("emailError")
+        DomID("email").style.borderColor = '';
+    } else {
+        DomID("email").style.borderColor = 'red';
+        changeDisplayStyleBlock("emailError")
+        loi++;
+    }
+
+    // nếu các diều kiện trên lỗi, dừng chương trình, ko push vào DSSV
+    if (loi != 0) {
+        return;
+    }
+    // push Sinh vien vao Danh SAch SV
+    var sinhvien = new sinhVien(masv, hoten, cmnd, sodt, email);
+
+    // Kiểm tra nếu 1 trong những validation bằng Rỗng ko push vào mảng DSSV
+    if (!(masv, hoten, cmnd, sodt, email === '')) {
+        DanhSachSinhVien.suaSinhVien(sinhvien);
+    }
+
+
+    // Cập nhật và render danh sách sinh viên
+    capNhatDanhSachSinhVien(DanhSachSinhVien)
 }
 
 // tìm kiếm sinh viên 

@@ -21,14 +21,25 @@ function danhSachSinhVien() {
 
     // sua sv
     this.suaSinhVien = function (svCapNhat) {
+        for (let i = 0; i < this.DSSV.length; i++) {
+            let svUpdate = this.DSSV[i];
+
+            if (svCapNhat.MaSv === svUpdate.MaSv) {
+                svUpdate.HoTen = svCapNhat.HoTen;
+                svUpdate.Cmnd = svCapNhat.Cmnd;
+                svUpdate.Sodt = svCapNhat.Sodt;
+                svUpdate.Email = svCapNhat.Email;
+            }
+        }
 
     };
 
     // tim kiem sv
     this.timKiemSinhVien = function (keywork) {
 
-        // list kết quả tìm kiếm: DanhSachSinhVien
+        //list kết quả tìm kiếm: DanhSachSinhVien
         var lstKetQuaTimKiem = new danhSachSinhVien();
+        // console.log(lstKetQuaTimKiem);
         for (var i = 0; i < this.DSSV.length; i++) {
             let sinhvien = this.DSSV[i];
 
@@ -38,5 +49,27 @@ function danhSachSinhVien() {
             }
         }
         return lstKetQuaTimKiem
+
+        // cách 2 
+        // var lstKetQuaTimKiem = new danhSachSinhVien()
+        // for (var i = 0; i < this.DSSV.length; i++) {
+        //     let sinhvien = this.DSSV[i];
+
+        //     if (sinhvien.HoTen.indexOf(keywork) != -1 || (sinhvien.HoTen.toLowerCase().indexOf(keywork) != -1) || (sinhvien.HoTen.toUpperCase().indexOf(keywork) != -1)) {
+        //         lstKetQuaTimKiem.themSinhVien(sinhvien)
+        //     }
+        // }
+        // return lstKetQuaTimKiem
     };
+
+
+    this.timSVTheoMa = function (masv) {
+        for (var i = 0; i < this.DSSV.length; i++) {
+            let sinhvien = this.DSSV[i];
+            if (sinhvien.MaSv === masv) {
+                return sinhvien;
+            }
+        }
+        return null;
+    }
 }
